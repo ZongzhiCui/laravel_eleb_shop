@@ -179,6 +179,8 @@ return [
 
         //验证码
         Mews\Captcha\CaptchaServiceProvider::class,
+        //微略图
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -231,6 +233,8 @@ return [
 
         //验证码
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        //微略图
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

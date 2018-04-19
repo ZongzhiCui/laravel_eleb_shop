@@ -7,20 +7,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="position: relative;">
                     <ul class="list-group">
-                        <li>店铺LOGO:<img src="{{$shop_business->shop_img}}" alt=""></li>
-                        <li>是否品牌:{{$shop_business->shop_rating}}</li>
-                        <li>是否准时:{{$shop_business->on_time}}</li>
-                        <li>是否蜂鸟:{{$shop_business->fengniao}}</li>
-                        <li>是否保标:{{$shop_business->bao}}</li>
-                        <li>是否票标:{{$shop_business->piao}}</li>
-                        <li>是否准标:{{$shop_business->zhun}}</li>
-                        <li>起送金额:{{$shop_business->start_send}}</li>
-                        <li>配送费用:{{$shop_business->send_cost}}</li>
-                        <li>预计时间:{{$shop_business->estimate_time}}</li>
-                        <li>小店公告:{{$shop_business->notice}}</li>
-                        <li>优惠信息:{{$shop_business->discount}}</li>
+                        <li>店铺LOGO:<img style="position: absolute;right: 0;" src="{{$shop_business->shop_img}}" alt=""></li>
+                        <li>店铺评分:&emsp;{{$shop_business->shop_rating}}</li>
+                        <li>是否品牌:&emsp;{{$shop_business->brand==0?'否':'是'}}</li>
+                        <li>是否准时:&emsp;{{$shop_business->on_time==0?'否':'是'}}</li>
+                        <li>是否蜂鸟:&emsp;{{$shop_business->fengniao==0?'否':'是'}}</li>
+                        <li>是否保标:&emsp;{{$shop_business->bao==0?'否':'是'}}</li>
+                        <li>是否票标:&emsp;{{$shop_business->piao==0?'否':'是'}}</li>
+                        <li>是否准标:&emsp;{{$shop_business->zhun==0?'否':'是'}}</li>
+
+                        <li>起送金额:&emsp;{{$shop_business->start_send}}</li>
+                        <li>配送费用:&emsp;{{$shop_business->send_cost}}</li>
+                        <li>预计时间:&emsp;{{$shop_business->estimate_time}}</li>
+                        <li>小店公告:&emsp;{{$shop_business->notice}}</li>
+                        <li>优惠信息:&emsp;{{$shop_business->discount}}</li>
                     </ul>
                 </div>
                 <div class="col-sm-1"></div>
