@@ -16,7 +16,7 @@ class shop_user extends Model
 
     public function shop_business()
     {
-        return $this->belongsTo(shop_business::class,'id')->withDefault([
+        return $this->belongsTo(shop_business::class,'business_id')->withDefault([
             'id' => '',
         ]);
     }

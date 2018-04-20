@@ -92,7 +92,7 @@ class ShopBusinessController extends Controller
         $img->save(public_path().$i_mg); //图片资源必须绝对路径!缩略图
         //保存数据库的文件路径为相对路径 ,.及网站根目录
         $shop_business->update([
-            'shop_img'=>$i_mg,
+            'shop_img'=>url($i_mg),
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand??0,
             'on_time'=>$request->on_time??0,

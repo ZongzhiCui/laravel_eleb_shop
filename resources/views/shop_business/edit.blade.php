@@ -12,12 +12,12 @@
 
                 店铺评分:<input class="form-control" type="text" name="shop_rating" value="{{$shop_business->shop_rating}}" placeholder="店铺评分"><br>
 
-                <label>是否品牌:<input class="form-control" type="checkbox" name="brand" value="1"></label>
-                <label>是否准时:<input class="form-control" type="checkbox" name="on_time" value="1"></label>
-                <label>是否蜂鸟:<input class="form-control" type="checkbox" name="fengniao" value="1"></label>
-                <label>是否保标:<input class="form-control" type="checkbox" name="bao" value="1"></label>
-                <label>是否票标:<input class="form-control" type="checkbox" name="piao" value="1"></label>
-                <label>是否准标:<input class="form-control" type="checkbox" name="zhun" value="1"></label><br>
+                <label>是否品牌:<input {{$shop_business->brand==0?'':'checked'}} class="form-control" type="checkbox" name="brand" value="1"></label>
+                <label>是否准时:<input {{$shop_business->on_time==0?'':'checked'}} class="form-control" type="checkbox" name="on_time" value="1"></label>
+                <label>是否蜂鸟:<input {{$shop_business->fengniao==0?'':'checked'}} class="form-control" type="checkbox" name="fengniao" value="1"></label>
+                <label>是否保标:<input {{$shop_business->bao==0?'':'checked'}} class="form-control" type="checkbox" name="bao" value="1"></label>
+                <label>是否票标:<input {{$shop_business->piao==0?'':'checked'}} class="form-control" type="checkbox" name="piao" value="1"></label>
+                <label>是否准标:<input {{$shop_business->zhun==0?'':'checked'}} class="form-control" type="checkbox" name="zhun" value="1"></label><br>
 
                 起送金额:<input class="form-control" type="number" name="start_send" value="{{$shop_business->start_send}}" placeholder="起送金额"><br>
                 配送费用:<input class="form-control" type="number" name="send_cost" value="{{$shop_business->send_cost}}" placeholder="配送费用"><br>
