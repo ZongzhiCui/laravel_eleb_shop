@@ -30,12 +30,13 @@ class LoginController extends Controller
             'captcha.captcha' => '验证码不正确',
         ]);
         DB::transaction(function ()use($request){
+            $shop_business = shop_business::create([
+                'shop_name'=>$request->name,
+            ]);
             shop_user::create([
                 'email'=>$request->email,
                 'password'=>bcrypt($request->password),
-            ]);
-            shop_business::create([
-                'shop_name'=>$request->name,
+                'business_id'=>$shop_business->id,
             ]);
         });
         return redirect('login');

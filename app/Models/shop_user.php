@@ -8,7 +8,7 @@ class shop_user extends Model
 {
     protected $table = 'shop_users';
     protected $fillable = [
-        'email','password','status',
+        'email','password','status','business_id',
     ];
     protected $hidden = [
         'password','remember_token',

@@ -1,0 +1,8 @@
+Schema::table('shop_users', function (Blueprint $table) {
+    $table->integer('business_id')->unsigned()->after('status');
+    $table->foreign('business_id')->references('id')->on('shop_businesses');
+});
+
+Schema::table('shop_users', function (Blueprint $table) {
+    $table->dropForeign(['business_id']);
+});
