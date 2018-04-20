@@ -22,7 +22,7 @@
 <div class="container">
     @include('layout._head')
     @include('layout._message')
-    @include('layout._errors')
+    @include('layout._error')
 
 
     @yield('content')
