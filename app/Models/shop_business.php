@@ -8,8 +8,8 @@ class shop_business extends Model
 {
     protected $table = 'shop_businesses';
     protected $fillable = [
-        'shop_name','shop_img','shop_rating','brand','on_time','fengniao',
-        'bao','zhun','start_send','send_cost','estimate_time','notice','discount',
+        'shop_name','shop_img','shop_rating','brand','on_time','fengniao','category_id',
+        'bao','piao','zhun','start_send','send_cost','estimate_time','notice','discount',
     ];
 
     public function shop_user()
