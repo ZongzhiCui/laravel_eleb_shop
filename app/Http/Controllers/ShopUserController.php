@@ -21,7 +21,7 @@ class ShopUserController extends Controller
      */
     public function index()
     {
-        return view('shop_user.index');
+        return '暂不支持此页!';
     }
 
     /**

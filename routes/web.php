@@ -20,7 +20,18 @@ Route::get('login','LoginController@create')->name('login');
 Route::post('login','LoginController@store')->name('login');
 Route::delete('logout','LoginController@destroy')->name('logout');
 
+//验证登录中间件
+Route::group(['middleware'=>['platform']],function (){
+
 //商铺用户
-Route::resource('shop_user','ShopUserController');
+    Route::resource('shop_user','ShopUserController');
 //商铺内容
-Route::resource('shop_business','ShopBusinessController');
+    Route::resource('shop_business','ShopBusinessController');
+
+//菜品分类
+    Route::resource('foodcate','FoodCateController');
+//菜品
+    Route::resource('food','FoodController');
+
+});
+

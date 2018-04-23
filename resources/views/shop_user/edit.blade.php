@@ -6,7 +6,7 @@
         <div class="col-sm-6">
             <form class="form-block" action="{{route('shop_user.update',compact('shop_user'))}}" method="post">
                 <div class="form-group">
-                    <p>用户名: </p>
+                    <p>用户名: {{ $shop_user->name }}</p>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputName5">Name</label>

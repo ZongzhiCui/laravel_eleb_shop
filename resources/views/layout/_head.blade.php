@@ -15,13 +15,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/shop_user">用户 <span class="sr-only">(current)</span></a></li>
-                <li><a href="/shop_user">帮助</a></li>
+                <li class="active"><a href="#">用户 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{route('shop_business.show',\Illuminate\Support\Facades\Auth::user())}}">我的店铺</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">店铺设置<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
+                        <li><a href="{{route('foodcate.index')}}">菜品分类</a></li>
+                        <li><a href="{{route('food.index')}}">菜品</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>
