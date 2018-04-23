@@ -61,7 +61,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email'=>$request->email,'password'=>$request->password],$request->has('remember'))){
             session()->flash('success','登录成功!');
             $shop_user = Auth::user();
-            return redirect()->route('shop_business.show',compact('shop_user'));//->intended();
+            return redirect()->route('shop_business.show',compact('shop_user'));//->intended('shop_business.show',compact('shop_user'));
         }else{
             return back()->withInput()->with('danger','用户名或者密码错误!');
         }

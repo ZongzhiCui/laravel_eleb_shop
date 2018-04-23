@@ -6,6 +6,7 @@ use App\Models\FoodCate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class FoodCateController extends Controller
 {
@@ -39,9 +40,13 @@ class FoodCateController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required',
+            'name'=>[
+                'required',
+                Rule::unique('food_cates')->where('business_id',Auth::user()->business_id)
+                ]
         ],[
             'name.required'=>'分类名称必须填写',
+            'name.unique'=>'当前店铺的分类名已经存在',
         ]);
 //        dd($request);
         $business_id = Auth::user()->business_id;
@@ -93,9 +98,13 @@ class FoodCateController extends Controller
     public function update(Request $request, FoodCate $foodcate)
     {
         $this->validate($request,[
-            'name'=>'required',
+            'name'=>[
+                'required',
+                Rule::unique('food_cates')->ignore($foodcate->id)->where('business_id',Auth::user()->business_id)
+            ]
         ],[
             'name.required'=>'分类名称必须填写',
+            'name.unique'=>'修改的菜品分类已经存在请更换',
         ]);
         $foodcate->update([
             'name'=>$request->name,

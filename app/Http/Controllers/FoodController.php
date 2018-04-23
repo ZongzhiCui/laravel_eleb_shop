@@ -7,6 +7,7 @@ use App\Models\FoodCate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class FoodController extends Controller
@@ -43,10 +44,19 @@ class FoodController extends Controller
     {
 //        dd($request->input(),$request->file('logo'));
         $this->validate($request,[
-            'name'=>'required',
+            'name'=>[
+                'required',
+                //菜品名称 在当前店铺和当前分类不能相同
+                Rule::unique('foods')->where(function ($query) use($request){ //where条件
+                    $query->where([
+                       ['business_is',Auth::user()->business_id],
+                        ['food_cates_id',$request->food_cates_id]
+                    ]);
+                })
+            ],
             'logo'=>'required|image',
         ],[
-
+            'name.unique'=>'菜品名称 在当前店铺和当前分类不能相同',
         ]);
         $thumb = 100;
         $filename = $request->file('logo')->store('public/date'.date('md'));
@@ -105,7 +115,16 @@ class FoodController extends Controller
     {
 //        dd($request->input());
         $this->validate($request,[
-            'name'=>'required',
+            'name'=>[
+                'required',
+                //菜品名称 在当前店铺和当前分类不能相同
+                Rule::unique('foods')->ignore($food->id)->where(function ($query) use($request){ //where条件
+                    $query->where([
+                        ['business_is',Auth::user()->business_id],
+                        ['food_cates_id',$request->food_cates_id]
+                    ]);
+                })
+            ],
             'logo'=>'image',
         ],[
 
