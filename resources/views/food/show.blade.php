@@ -10,7 +10,7 @@
                 <div class="col-sm-10" style="position: relative;">
                     <ul class="list-group">
                         <li>菜品名称:&emsp;{{$food->name}}</li>
-                        <li>菜品图片:&emsp;<img src="{{$food->logo}}" alt=""></li>
+                        <li>菜品图片:&emsp;<img height="300px" src="{{$food->logo}}" alt=""></li>
                         <li>菜品评分:&emsp;{{$food->rating}}</li>
                         <li>菜品价格:&emsp;{{$food->price}}</li>
                         <li>菜品月销:&emsp;{{$food->month_sales}}</li>

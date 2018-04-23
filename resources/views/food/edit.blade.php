@@ -13,8 +13,13 @@
                     <input type="text" name="name" value="{{$food->name}}" class="form-control" id="exampleInputName1" placeholder="菜品名称">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputName2">菜品图片</label>
-                    <input type="file" name="logo" value="{{$food->logo}}" class="form-control" id="exampleInputName2" placeholder="菜品图片">
+                    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+                    <div id="uploader-demo">
+                        <div id="fileList" class="uploader-list"></div>
+                        <div id="filePicker">选择图片</div>
+                        <img height="200px" src="" id="img" alt="">
+                    </div>
+                    <input type="hidden" name="logo" id="logo">
                 </div>
                 {{--<div class="form-group">--}}
                 {{--<label for="exampleInputName3">菜品评分</label>--}}
@@ -61,6 +66,42 @@
                 {{ method_field('PUT') }}
             </form>
         </div>
-        <div class="col-sm-3"><img src="{{$food->logo}}" alt=""></div>
+        <div class="col-sm-3"><img height="500px" src="{{$food->logo}}" alt=""></div>
     </div>
+@stop
+@section('jquery')
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
+    <script>
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: '/webuploader/Uploader.swf',
+
+            // 文件接收服务端。
+            server: '/upload',
+            formData: {'_token':'{{csrf_token()}}'},
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        //文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file,response ) {
+//        $( '#'+file.id ).addClass('upload-state-done');
+            var url = response.url;
+            $('#img').attr('src',url);
+            $('#logo').val(url);
+        });
+    </script>
 @stop

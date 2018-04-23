@@ -54,19 +54,27 @@ class FoodController extends Controller
                     ]);
                 })
             ],
-            'logo'=>'required|image',
+            'logo'=>'required',
         ],[
             'name.unique'=>'菜品名称 在当前店铺和当前分类不能相同',
         ]);
-        $thumb = 100;
-        $filename = $request->file('logo')->store('public/date'.date('md'));
+//        $filename = $request->file('logo')->store('public/date'.date('md'));
+
+/**        $thumb = 100;
         $path_parts = pathinfo(Storage::url($filename)); //Storage::url($filename);这个才是可用的图片路径
         $i_mg = $path_parts['dirname'].'/'.$path_parts['filename'].'_'.$thumb.'X'.$thumb.'.'.$path_parts['extension']; //拼接缩略图文件路径
         $img = Image::make(public_path().Storage::url($filename))->resize($thumb, $thumb);//图片资源必须绝对路径!缩略图
-        $img->save(public_path().$i_mg);
+        $img->save(public_path().$i_mg);*/
+
+//        dd($filename,$i_mg);
+        //上传到阿里OSS
+//        $ToAliOss = $this->ToAliOss($filename,'eleb/shop/');
+//        dd($ToAliOss);
+
         $food = Food::create([
             'name'=>$request->name,
-            'logo'=>url($i_mg),
+//            'logo'=>url($i_mg),
+            'logo'=>$request->logo,
             'rating'=>$request->rating??0,
             'price'=>$request->price??0,
             'month_sales'=>$request->month_sales??0,
@@ -125,7 +133,7 @@ class FoodController extends Controller
                     ]);
                 })
             ],
-            'logo'=>'image',
+//            'logo'=>'image',
         ],[
 
         ]);

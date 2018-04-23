@@ -6,3 +6,5 @@ Schema::table('shop_users', function (Blueprint $table) {
 Schema::table('shop_users', function (Blueprint $table) {
     $table->dropForeign(['business_id']);
 });
+
+ //composer require aliyuncs/aliyun-oss-php-sdk-laravel
