@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\shop_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,8 @@ class ShopUserController extends Controller
     //商铺首页.注册登录
     public function home()
     {
-        return view('shop_user.home');
+        $activitys = Activity::paginate(3);
+        return view('shop_user.home',compact('activitys'));
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +23,7 @@ class ShopUserController extends Controller
      */
     public function index()
     {
-        return '暂不支持此页!';
+        return '赞不支持此功能!敬请期待!';
     }
 
     /**

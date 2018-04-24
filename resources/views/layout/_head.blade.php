@@ -15,7 +15,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">用户 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="/">活动 <span class="sr-only">(current)</span></a></li>
                 <li><a href="{{route('shop_business.show',\Illuminate\Support\Facades\Auth::user())}}">我的店铺</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">店铺设置<span class="caret"></span></a>
