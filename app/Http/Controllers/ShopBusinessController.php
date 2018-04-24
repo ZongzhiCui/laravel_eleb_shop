@@ -72,7 +72,7 @@ class ShopBusinessController extends Controller
     public function update(Request $request, shop_business $shop_business)
     {
         $this->validate($request,[
-            'shop_img'=>'required|image',
+//            'shop_img'=>'required|image',
             'shop_rating'=>'numeric',
             'start_send'=>'required',
             'send_cost'=>'required',
@@ -80,7 +80,7 @@ class ShopBusinessController extends Controller
         ],[
 
         ]);
-        $thumb = 270;
+/**        $thumb = 270;
         $filename = $request->file('shop_img')->store('public/date'.date('md'));
         $path_parts = pathinfo(Storage::url($filename)); //Storage::url($filename);这个才是可用的图片路径
         $i_mg = $path_parts['dirname'].'/'.$path_parts['filename'].'_'.$thumb.'X'.$thumb.'.'.$path_parts['extension']; //拼接缩略图文件路径
@@ -89,10 +89,10 @@ class ShopBusinessController extends Controller
 //        dd($filename);  //public/date0419/nY74PQjcTyZEsRfxZHm3gYP00vJkOOfXOMR8FgiM.jpeg
         $img = Image::make(public_path().Storage::url($filename))->resize($thumb, $thumb);//图片资源必须绝对路径!缩略图
 //        dd($i_mg);die;
-        $img->save(public_path().$i_mg); //图片资源必须绝对路径!缩略图
+        $img->save(public_path().$i_mg); //图片资源必须绝对路径!缩略图*/
         //保存数据库的文件路径为相对路径 ,.及网站根目录
         $shop_business->update([
-            'shop_img'=>url($i_mg),
+            'shop_img'=>$request->logo,
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand??0,
             'on_time'=>$request->on_time??0,
