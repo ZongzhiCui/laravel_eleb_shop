@@ -13,7 +13,7 @@ class ShopUserController extends Controller
     //活动首页!!!
     public function home()
     {
-        $activitys = Activity::paginate(3);
+        $activitys = Activity::orderBy('id','desc')->paginate(3);
         return view('shop_user.home',compact('activitys'));
     }
     //活动详情

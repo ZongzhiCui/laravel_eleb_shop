@@ -143,7 +143,7 @@ class FoodController extends Controller
                 $arr[$k] = $v;
             }
         }
-        if ($request->logo != null){
+        /*if ($request->logo != null){
             $thumb = 100;
             $filename = $request->file('logo')->store('public/date'.date('md'));
             $path_parts = pathinfo(Storage::url($filename)); //Storage::url($filename);这个才是可用的图片路径
@@ -152,7 +152,7 @@ class FoodController extends Controller
             $img->save(public_path().$i_mg);
             $arr['logo'] = url($i_mg);
 //            dd($arr['logo']);
-        }
+        }*/
         $food->update($arr);
         return redirect()->route('food.show',compact('food'));
     }

@@ -24,7 +24,7 @@
             <tr data-id="{{ $row->id }}">
                 <td>{{ $row->id }}</td>
                 <td>{{ $row->name }}</td>
-                <td><img width="100px" src="{{ $row->logo }}" alt=""></td>
+                <td><img src="{{ $row->logo }}" alt=""></td>
                 <td>{{ $row->rating }}</td>
                 <td>{{ $row->price }}</td>
                 <td>{{ $row->month_sales }}</td>
