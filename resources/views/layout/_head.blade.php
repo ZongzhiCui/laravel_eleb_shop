@@ -40,7 +40,7 @@
                 {{--data-toggle="modal" data-target="#myModal"--}}
                 @guest
                     <li><a href="#" id="click_a"  data-toggle="modal" data-target="#myModal">登录我的商铺</a></li>
-                    <li><a href="{{ route('register') }}">注册商户</a></li>
+                    <li><a href="{{ route('register1') }}">注册商户</a></li>
                     <li>&emsp;</li>
                 @endguest
                 @auth
@@ -52,7 +52,7 @@
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <form action="{{route('logout')}}" method="post">
+                                <form action="{{route('logout1')}}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-link">退出登录</button>

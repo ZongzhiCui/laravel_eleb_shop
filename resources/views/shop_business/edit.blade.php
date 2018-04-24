@@ -58,7 +58,7 @@
             server: '/upload',
             formData: {
                 '_token':'{{csrf_token()}}',
-                'width':300,
+                'width':260,
                 'height':270,
             },
 
