@@ -13,8 +13,8 @@
             @foreach ($activitys as $row)
                 <tr data-id="{{ $row->id }}">
                     <td>{{$row->id}}</td>
-                    <td><sup style="color: red">{{$row->end_time<date('Y-m-d')?'该活动已过期!':''}}</sup>{{$row->title}}</td>
-                    <td>{!! $row->content !!}</td>
+                    <td><sup style="color: red">{{$row->end_time<date('Y-m-d')?'该活动已过期!':''}}</sup><a href="{{route('shop_user.content',compact('row'))}}">{{$row->title}}</a></td>
+                    <td>{!! mb_substr($row->content,0,66) !!}</td>
                     <td>{{$row->start_time}}</td>
                     <td>{{$row->end_time}}</td>
                     {{--<td>

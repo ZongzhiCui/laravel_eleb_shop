@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Hash;
 
 class ShopUserController extends Controller
 {
-    //商铺首页.注册登录
+    //活动首页!!!
     public function home()
     {
         $activitys = Activity::paginate(3);
         return view('shop_user.home',compact('activitys'));
+    }
+    //活动详情
+    public function content(Activity $activity)
+    {
+//        dd($activity);
+        return view('shop_user.content',compact('activity'));
     }
     /**
      * Display a listing of the resource.

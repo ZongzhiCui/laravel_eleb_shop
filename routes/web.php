@@ -12,6 +12,8 @@
 */
 
 Route::get('/','ShopUserController@home');
+//0424添加content方法 显示活动详情
+Route::get('shop_user/content/{activity}','ShopUserController@content')->name('shop_user.content');
 
 //商户注册与登录
 Route::get('register','LoginController@register')->name('register');
