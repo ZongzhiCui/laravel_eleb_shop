@@ -9,8 +9,8 @@ class UploadController extends Controller
 {
     public function upload(Request $request)
     {
-        $width = $request->width;
-        $height = $request->height;
+        $width = $request->width??150;
+        $height = $request->height??150;
         $filename = $request->file('file')->store('public/date'.date('md'));
         //制作缩略图
         $thumb = $this->thumb($filename,$width,$height);

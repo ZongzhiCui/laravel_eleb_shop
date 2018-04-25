@@ -18,7 +18,7 @@ class platform
     {
 //        dd(Auth::check());
         if (Auth::check()==false){
-            return redirect('login');
+            return redirect('login1');
         }
         return $next($request);
     }

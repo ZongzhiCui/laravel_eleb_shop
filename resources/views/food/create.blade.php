@@ -82,7 +82,11 @@
 
         // 文件接收服务端。
         server: '/upload',
-        formData: {'_token':'{{csrf_token()}}'},
+        formData: {
+            '_token':'{{csrf_token()}}',
+            'width':100,
+            'height':100,
+        },
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
