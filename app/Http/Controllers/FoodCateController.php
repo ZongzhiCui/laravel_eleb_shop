@@ -17,6 +17,8 @@ class FoodCateController extends Controller
      */
     public function index()
     {
+        //数据库最后一个ID
+//        dd(FoodCate::orderBy('id','desc')->take(1)->get()[0]->id);
         $foodcates = FoodCate::where('business_id',Auth::user()->business_id)->paginate(3);
         return view('food_cate.index',compact('foodcates'));
     }
@@ -50,11 +52,13 @@ class FoodCateController extends Controller
         ]);
 //        dd($request);
         $business_id = Auth::user()->business_id;
+        $t = 'c'.(FoodCate::orderBy('id','desc')->take(1)->get()[0]->id+1);
         $foodcate = FoodCate::create([
             'name'=>$request->name,
             'description'=>$request->description??'',
             'is_selected'=>$request->is_selected??0,
             'business_id'=>$business_id,
+            'type_accumulation'=>$t,
         ]);
         $id = $foodcate->id;
         if ($request->is_selected==1){
