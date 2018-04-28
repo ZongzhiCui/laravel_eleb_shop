@@ -64,6 +64,11 @@ Route::get('/oss', function()
 
 //webuploader 文件上传!
 Route::post('/upload','Tools\UploadController@upload');
+
+//laravel自带的登录注册
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//0428商家查看商铺的订单列表
+Route::get('/order','ShopBusinessController@index')->name('order');

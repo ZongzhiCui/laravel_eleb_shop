@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\shop_business;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -16,7 +19,15 @@ class ShopBusinessController extends Controller
      */
     public function index()
     {
-        //
+        //订单列表
+            //1.先根据登录的用户查询对应的 商铺ID 去查询订单里有商铺的订单
+            $shop_user = Auth::user()->business_id;
+        $orders = Order::where('shop_id',$shop_user)->paginate(5);
+        foreach ($orders as $order){
+            $user = DB::table('users')->find($order->users_id);
+            $order->user_tel = $user->username.':'.$user->tel;
+        }
+        return view('shop_business.index',compact('orders'));
     }
 
     /**
