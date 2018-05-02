@@ -89,6 +89,7 @@ class ShopBusinessController extends Controller
     //菜品统计
     public function foodCount()
     {
+        //查询当前用户的店铺的订单id
         $shop_id = Auth::user()->business_id;
         $orders = Order::where('shop_id',$shop_id)->get();
         $ids = [];
@@ -96,6 +97,7 @@ class ShopBusinessController extends Controller
             $ids[] = $row->id;
         }
         $str = implode(',',$ids);
+        //判断
         $total = DB::select("select foods_id,sum(foods_amount) as total from `order_foods` where order_id in ($str) GROUP by `foods_id` order BY total desc");
 //        $month = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[date('Y-m-1 00:00:00'),date('Y-m-1 00:00:00',strtotime('next month'))])[0]->m;
 //        $day = DB::select("select count('id') as d from `orders` where created_at>? and created_at<?",[date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])[0]->d;
@@ -106,6 +108,7 @@ class ShopBusinessController extends Controller
     //按时间查看订单统计
     public function foodTime(Request $request)
     {
+        //查询当前用户的店铺的订单id
         $shop_id = Auth::user()->business_id;
         $orders = Order::where('shop_id',$shop_id)->get();
         $ids = [];
@@ -113,6 +116,7 @@ class ShopBusinessController extends Controller
             $ids[] = $row->id;
         }
         $str = implode(',',$ids);
+        //判断
         if ($request->date==null and $request->month==null and ($request->datetime1==null or $request->datetime2==null)){
             return back()->withInput()->with('danger','请输入要搜索的日期!');
         }
