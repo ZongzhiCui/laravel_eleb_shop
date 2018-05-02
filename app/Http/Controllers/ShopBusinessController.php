@@ -30,6 +30,90 @@ class ShopBusinessController extends Controller
         return view('shop_business.index',compact('orders'));
     }
 
+    //订单详情!!!
+    public function orderShow(Order $order)
+    {
+        $order = Order::find($order->id);
+        //拼如.创建时间,商品数组,地址拼接
+        //需要查询出商品数组 根据$order->id 从order_foods表里查
+        $goods_list = DB::table('order_foods')->where('order_id',$order->id)->get();
+//            dd($goods_list);
+        foreach ($goods_list as $good){
+            $good->goods_id = $good->foods_id;
+            $good->goods_name = $good->foods_name;
+            $good->goods_img = $good->foods_logo;
+            $good->amount = $good->foods_amount;
+            $good->goods_price = $good->foods_price;
+        }
+        $order->order_birth_time = substr($order->created_at,0,16);
+        $order->order_status = $order->order_status==0?'代付款':'已付款';
+        $order->goods_list = $goods_list;
+        $order->order_address = $order->receipt_provence.$order->receipt_city.$order->receipt_area.$order->receipt_detail_address.$order->receipt_name.$order->receipt_tel;
+        return view('shop_business.orderShow',compact('order'));
+    }
+
+    //订单统计
+    public function orderCount()
+    {
+        $total = DB::select("select count('id') as total from `orders`")[0]->total;
+//        $month = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[date('Y-m-1 00:00:00'),date('Y-m-1 00:00:00',strtotime('next month'))])[0]->m;
+//        $day = DB::select("select count('id') as d from `orders` where created_at>? and created_at<?",[date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])[0]->d;
+        $month = DB::select("select count('id') as m from `orders` where created_at like ?",[date('Y-m').'%'])[0]->m;
+        $day = DB::select("select count('id') as m from `orders` where created_at like ?",[date('Y-m-d').'%'])[0]->m;
+        return view('shop_business.orderCount',compact('total','month','day'));
+    }
+    //按时间查看订单统计
+    public function orderTime(Request $request)
+    {
+        if ($request->date==null and $request->month==null and ($request->datetime1==null or $request->datetime2==null)){
+            return back()->withInput()->with('danger','请输入要搜索的日期!');
+        }
+        if ($request->date!=null){
+            $date = $request->date;
+            $count = DB::select("select count('id') as m from `orders` where created_at LIKE ?",[$date.'%'])[0]->m;
+        }elseif ($request->month!=null){
+            $date = $request->month;
+            $count = DB::select("select count('id') as m from `orders` where created_at LIKE ?",[$date.'%'])[0]->m;
+        }elseif($request->datetime1!=null and $request->datetime2!=null){
+            $date = $request->datetime1;
+            $date1 = $request->datetime2;
+//            dd($date,$date1);
+            $count = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[$date,$date1])[0]->m;
+        }
+        return view('shop_business.orderTime',compact('count'));
+    }
+
+    /**- 菜品销量统计[按日统计,按月统计,累计]（每日、每月、总计） **/
+    //菜品统计
+    public function foodCount()
+    {
+        $total = DB::select("select foods_id,sum(foods_amount) as total from `order_foods` GROUP by `foods_id` order BY total desc");
+//        $month = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[date('Y-m-1 00:00:00'),date('Y-m-1 00:00:00',strtotime('next month'))])[0]->m;
+//        $day = DB::select("select count('id') as d from `orders` where created_at>? and created_at<?",[date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])[0]->d;
+        $month = DB::select("select foods_id,sum(foods_amount) as m from `order_foods` WHERE created_at like ? GROUP by `foods_id` order BY m desc",[date('Y-m').'%']);
+        $day = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at like ? GROUP by `foods_id` order BY d desc",[date('Y-m-d').'%']);
+        return view('shop_business.foodCount',compact('total','month','day'));
+    }
+    //按时间查看订单统计
+    public function foodTime(Request $request)
+    {
+        if ($request->date==null and $request->month==null and ($request->datetime1==null or $request->datetime2==null)){
+            return back()->withInput()->with('danger','请输入要搜索的日期!');
+        }
+        if ($request->date!=null){
+            $date = $request->date;
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at like ? GROUP by `foods_id` ORDER by d desc",[$date.'%']);
+        }elseif ($request->month!=null){
+            $date = $request->month;
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` WHERE created_at like ? GROUP by `foods_id` order BY d desc",[$date.'%']);
+        }elseif($request->datetime1!=null and $request->datetime2!=null){
+            $date = $request->datetime1;
+            $date1 = $request->datetime2;
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at between ? and ? GROUP by `foods_id` order BY d desc",[$date,$date1]);
+        }
+        return view('shop_business.foodTime',compact('count'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

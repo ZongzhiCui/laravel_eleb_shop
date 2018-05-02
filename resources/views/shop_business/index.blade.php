@@ -4,7 +4,7 @@
     <table class="table table-bordered" id="mytable">
         <tr>
             <td>ID</td>
-            <td>order_code</td>
+            {{--<td>order_code</td>--}}
             <td>order_status</td>
             <td>users_id</td>
             <td>shop_id</td>
@@ -21,7 +21,7 @@
         @forelse($orders as $row)
             <tr data-id="{{ $row->id }}">
                 <td>{{ $row->id }}</td>
-                <td>{{ $row->order_code }}</td>
+                {{--<td>{{ $row->order_code }}</td>--}}
                 <td>{{ $row->order_status==0?'代支付':'已支付' }}</td>
                 <td>{{ $row->user_tel }}</td>
                 <td>{{ $row->shop_id }}</td>
@@ -32,9 +32,9 @@
                 <td>{{ $row->receipt_tel }}</td>
                 <td>{{ $row->receipt_provence.$row->receipt_city.$row->receipt_area.$row->receipt_detail_address }}</td>
                 <td>
-                    {{--<a href="@{{ route('food.show',compact('row')) }}" class="btn btn-xs btn-success">查看</a>--}}
-{{--                    <a href="{{ route('food.edit',compact('row')) }}" class="btn btn-xs btn-primary">编辑</a>--}}
-                    {{--<button class="btn btn-xs btn-danger">删除</button>--}}
+                    <a href="{{ route('order.show',compact('row')) }}" class="btn btn-sm btn-primary">查看</a>
+                    {{--<a href="{{ route('food.edit',compact('row')) }}" class="btn btn-xs btn-primary">编辑</a>--}}
+                    {{--<button class="btn btn-xs btn-primary">接单</button>--}}
                 </td>
             </tr>
             @empty
@@ -64,6 +64,7 @@
                     });
                 }
             })
+
         })
     </script>
 @stop

@@ -72,3 +72,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //0428商家查看商铺的订单列表
 Route::get('/order','ShopBusinessController@index')->name('order');
+//订单详情
+Route::get('/order/{order}','ShopBusinessController@orderShow')->name('order.show');
+//订单统计
+Route::get('/orderCount','ShopBusinessController@orderCount')->name('order.count');
+//订单查询
+Route::post('/orderTime','ShopBusinessController@orderTime')->name('order.time');
+
+//菜品统计
+Route::get('/foodCount','ShopBusinessController@foodCount')->name('food.count');
+//菜品查询
+Route::post('/foodTime','ShopBusinessController@foodTime')->name('food.time');
