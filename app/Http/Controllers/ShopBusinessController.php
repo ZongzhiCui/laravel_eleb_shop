@@ -55,30 +55,32 @@ class ShopBusinessController extends Controller
     //订单统计
     public function orderCount()
     {
-        $total = DB::select("select count('id') as total from `orders`")[0]->total;
+        $shop_id = Auth::user()->business_id;
+        $total = DB::select("select count('id') as total from `orders` where shop_id={$shop_id}")[0]->total;
 //        $month = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[date('Y-m-1 00:00:00'),date('Y-m-1 00:00:00',strtotime('next month'))])[0]->m;
 //        $day = DB::select("select count('id') as d from `orders` where created_at>? and created_at<?",[date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])[0]->d;
-        $month = DB::select("select count('id') as m from `orders` where created_at like ?",[date('Y-m').'%'])[0]->m;
-        $day = DB::select("select count('id') as m from `orders` where created_at like ?",[date('Y-m-d').'%'])[0]->m;
+        $month = DB::select("select count('id') as m from `orders` where shop_id={$shop_id} and created_at like ?",[date('Y-m').'%'])[0]->m;
+        $day = DB::select("select count('id') as m from `orders` where shop_id={$shop_id} and created_at like ?",[date('Y-m-d').'%'])[0]->m;
         return view('shop_business.orderCount',compact('total','month','day'));
     }
     //按时间查看订单统计
     public function orderTime(Request $request)
     {
+        $shop_id = Auth::user()->business_id;
         if ($request->date==null and $request->month==null and ($request->datetime1==null or $request->datetime2==null)){
             return back()->withInput()->with('danger','请输入要搜索的日期!');
         }
         if ($request->date!=null){
             $date = $request->date;
-            $count = DB::select("select count('id') as m from `orders` where created_at LIKE ?",[$date.'%'])[0]->m;
+            $count = DB::select("select count('id') as m from `orders` where shop_id={$shop_id} and created_at LIKE ?",[$date.'%'])[0]->m;
         }elseif ($request->month!=null){
             $date = $request->month;
-            $count = DB::select("select count('id') as m from `orders` where created_at LIKE ?",[$date.'%'])[0]->m;
+            $count = DB::select("select count('id') as m from `orders` where shop_id={$shop_id} and created_at LIKE ?",[$date.'%'])[0]->m;
         }elseif($request->datetime1!=null and $request->datetime2!=null){
             $date = $request->datetime1;
             $date1 = $request->datetime2;
 //            dd($date,$date1);
-            $count = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[$date,$date1])[0]->m;
+            $count = DB::select("select count('id') as m from `orders` where shop_id={$shop_id} and created_at between ? and ?",[$date,$date1])[0]->m;
         }
         return view('shop_business.orderTime',compact('count'));
     }
@@ -87,29 +89,43 @@ class ShopBusinessController extends Controller
     //菜品统计
     public function foodCount()
     {
-        $total = DB::select("select foods_id,sum(foods_amount) as total from `order_foods` GROUP by `foods_id` order BY total desc");
+        $shop_id = Auth::user()->business_id;
+        $orders = Order::where('shop_id',$shop_id)->get();
+        $ids = [];
+        foreach ($orders as $row){
+            $ids[] = $row->id;
+        }
+        $str = implode(',',$ids);
+        $total = DB::select("select foods_id,sum(foods_amount) as total from `order_foods` where order_id in ($str) GROUP by `foods_id` order BY total desc");
 //        $month = DB::select("select count('id') as m from `orders` where created_at between ? and ?",[date('Y-m-1 00:00:00'),date('Y-m-1 00:00:00',strtotime('next month'))])[0]->m;
 //        $day = DB::select("select count('id') as d from `orders` where created_at>? and created_at<?",[date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])[0]->d;
-        $month = DB::select("select foods_id,sum(foods_amount) as m from `order_foods` WHERE created_at like ? GROUP by `foods_id` order BY m desc",[date('Y-m').'%']);
-        $day = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at like ? GROUP by `foods_id` order BY d desc",[date('Y-m-d').'%']);
+        $month = DB::select("select foods_id,sum(foods_amount) as m from `order_foods` WHERE order_id in ($str) and created_at like ? GROUP by `foods_id` order BY m desc",[date('Y-m').'%']);
+        $day = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where order_id in ($str) and created_at like ? GROUP by `foods_id` order BY d desc",[date('Y-m-d').'%']);
         return view('shop_business.foodCount',compact('total','month','day'));
     }
     //按时间查看订单统计
     public function foodTime(Request $request)
     {
+        $shop_id = Auth::user()->business_id;
+        $orders = Order::where('shop_id',$shop_id)->get();
+        $ids = [];
+        foreach ($orders as $row){
+            $ids[] = $row->id;
+        }
+        $str = implode(',',$ids);
         if ($request->date==null and $request->month==null and ($request->datetime1==null or $request->datetime2==null)){
             return back()->withInput()->with('danger','请输入要搜索的日期!');
         }
         if ($request->date!=null){
             $date = $request->date;
-            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at like ? GROUP by `foods_id` ORDER by d desc",[$date.'%']);
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where order_id in ($str) and created_at like ? GROUP by `foods_id` ORDER by d desc",[$date.'%']);
         }elseif ($request->month!=null){
             $date = $request->month;
-            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` WHERE created_at like ? GROUP by `foods_id` order BY d desc",[$date.'%']);
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` WHERE order_id in ($str) and created_at like ? GROUP by `foods_id` order BY d desc",[$date.'%']);
         }elseif($request->datetime1!=null and $request->datetime2!=null){
             $date = $request->datetime1;
             $date1 = $request->datetime2;
-            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where created_at between ? and ? GROUP by `foods_id` order BY d desc",[$date,$date1]);
+            $count = DB::select("select foods_id,sum(foods_amount) as d from `order_foods` where order_id in ($str) and created_at between ? and ? GROUP by `foods_id` order BY d desc",[$date,$date1]);
         }
         return view('shop_business.foodTime',compact('count'));
     }
