@@ -12,12 +12,12 @@
                         <td>菜品id</td>
                         <td>菜品数量</td>
                     </tr>
+                    @foreach($month as $row)
                     <tr>
-                        @foreach($month as $row)
                         <td>{{$row->foods_id}}</td>
                         <td>{{$row->m}}</td>
-                        @endforeach
                     </tr>
+                    @endforeach
                 </table>
             </div>
             <div class="col-sm-6">
