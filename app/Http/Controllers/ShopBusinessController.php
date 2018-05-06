@@ -64,7 +64,7 @@ class ShopBusinessController extends Controller
     //查看里面有个商家接单按钮
     public function acceptOrder(Order $order)
     {
-        $order->update(['order_status'=>1]);
+        $order->update(['order_status'=>2]);
         $this->sendSms($order->receipt_tel);
         return '已接单';
     }

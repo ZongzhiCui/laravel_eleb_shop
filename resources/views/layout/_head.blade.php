@@ -15,7 +15,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">活动 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{route('event.index')}}">最新活动 <span class="sr-only">(current)</span></a></li>
                 <li><a href="{{route('shop_business.show',\Illuminate\Support\Facades\Auth::user())}}">我的店铺</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">店铺设置<span class="caret"></span></a>
@@ -27,7 +27,7 @@
                         <li><a href="{{route('order.count')}}">订单统计</a></li>
                         <li><a href="{{route('food.count')}}">菜品统计</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li><a href="/">旧版活动</a></li>
                     </ul>
                 </li>
             </ul>

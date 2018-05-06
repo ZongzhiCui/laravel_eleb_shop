@@ -87,3 +87,11 @@ Route::post('/orderTime','ShopBusinessController@orderTime')->name('order.time')
 Route::get('/foodCount','ShopBusinessController@foodCount')->name('food.count');
 //菜品查询
 Route::post('/foodTime','ShopBusinessController@foodTime')->name('food.time');
+
+//活动查看
+Route::get('/event','EventController@index')->name('event.index');
+//查看活动详情
+Route::get('/event/{event}','EventController@show')->name('event.show');
+//添加参加活动人员
+Route::post('/createEventMember','EventController@createEventMember')->name('event.createEventMember');
+
