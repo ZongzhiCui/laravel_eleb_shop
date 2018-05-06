@@ -17,10 +17,10 @@
                         <li>数量:&emsp;{{$goods->amount}}</li>
                         <li>价格:&emsp;{{$goods->goods_price}}</li>
                         @endforeach
-                        <div id="mytable">
-                            <button class="btn btn-xs btn-primary">接单</button>
-                            <button class="btn btn-xs btn-success hidden">发货</button>
-                            <button class="btn btn-xs btn-info hidden">取消订单</button>
+                        <div id="mytable" data-id="{{$order->id}}">
+                            <button class="btn btn-lg btn-primary">接单</button>
+                            <button class="btn btn-lg btn-success hidden">发货</button>
+                            <button class="btn btn-lg btn-info hidden">取消订单</button>
                         </div>
                         {{--<li>是否准标:&emsp;{{$order->zhun==0?'否':'是'}}</li>--}}
                     </ul>
@@ -33,9 +33,28 @@
 @section('jquery')
     <script type="text/javascript">
     $(function () {
-        $('#mytable .btn-primary').on('click',function () {
-            $('#mytable .btn').toggleClass('hidden');
-        })
+        var id = $('mytable').data('id');
+
+        $.get("button", { "id": id },
+            function(data){
+                if (data == 1){
+                    $('#mytable .btn').toggleClass('hidden');
+                }
+                $('#mytable .btn-primary').on('click',function () {
+                    $('#mytable .btn').toggleClass('hidden');
+                    var id = $(this).closest('div').date('id');
+                    $.ajax({
+                        type: "PUT",
+                        url: "acceptOrder"+id,
+                        data: "_token={{ csrf_token() }}",
+                        success: function(msg){
+                            layer.msg(msg, function(){
+                                //关闭后的操作
+                            });
+                        }
+                    });
+                })
+            });
     })
     </script>
     @stop

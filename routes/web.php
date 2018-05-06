@@ -74,6 +74,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/order','ShopBusinessController@index')->name('order');
 //订单详情
 Route::get('/order/{order}','ShopBusinessController@orderShow')->name('order.show');
+//前端AJAX显示按钮
+Route::get('button/{button}','ShopBusinessController@button')->name('button');
+//商家接受订单
+Route::post('acceptOrder/{acceptOrder}','ShopBusinessController@acceptOrder')->name('acceptOrder');
 //订单统计
 Route::get('/orderCount','ShopBusinessController@orderCount')->name('order.count');
 //订单查询
