@@ -57,12 +57,14 @@ class ShopBusinessController extends Controller
     //前端AJAX显示按钮
     public function button(Order $button)
     {
+        //未验证!!
         $status = Order::find($button->id)->order_status;
         return $status;
     }
     //查看里面有个商家接单按钮
     public function acceptOrder(Order $acceptOrder)
     {
+        dd($acceptOrder);
         $acceptOrder->update(['order_status'=>1]);
         $this->sendSms($acceptOrder->receipt_tel);
     }

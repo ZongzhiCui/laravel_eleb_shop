@@ -33,16 +33,15 @@
 @section('jquery')
     <script type="text/javascript">
     $(function () {
-        var id = $('mytable').data('id');
+        /*var id = $('mytable').data('id');
 
-        $.get("button", { "id": id },
-            function(data){
+        $.get("button", { "id": id },function(data){  //未验证!!
                 if (data == 1){
                     $('#mytable .btn').toggleClass('hidden');
-                }
+                }*/
                 $('#mytable .btn-primary').on('click',function () {
                     $('#mytable .btn').toggleClass('hidden');
-                    var id = $(this).closest('div').date('id');
+                    var id = $(this).closest('div').data('id');
                     $.ajax({
                         type: "PUT",
                         url: "acceptOrder"+id,
@@ -54,7 +53,7 @@
                         }
                     });
                 })
-            });
+//            });
     })
     </script>
     @stop
