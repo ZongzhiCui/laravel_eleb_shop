@@ -43,9 +43,9 @@
                     $('#mytable .btn').toggleClass('hidden');
                     var id = $(this).closest('div').data('id');
                     $.ajax({
-                        type: "PUT",
-                        url: "acceptOrder"+id,
-                        data: "_token={{ csrf_token() }}",
+                        type: "GET",
+                        url: "/acceptOrder/"+id,
+//                        data: "id="+id,
                         success: function(msg){
                             layer.msg(msg, function(){
                                 //关闭后的操作
