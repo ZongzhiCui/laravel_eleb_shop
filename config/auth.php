@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\user::class,  //D:\www\eleb\eleb_shop\app\Models\shop_user.php
+            'model' => App\User::class,  //D:\www\eleb\eleb_shop\app\Models\shop_user.php
         ],
 
         // 'users' => [

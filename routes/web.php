@@ -16,11 +16,11 @@ Route::get('/','ShopUserController@home');
 Route::get('shop_user/content/{activity}','ShopUserController@content')->name('shop_user.content');
 
 //商户注册与登录
-Route::get('register1','LoginController@register')->name('register1');
-Route::post('register1','LoginController@save')->name('register1');
-Route::get('login1','LoginController@create')->name('login1');
-Route::post('login1','LoginController@store')->name('login1');
-Route::delete('logout1','LoginController@destroy')->name('logout1');
+Route::get('register','LoginController@register')->name('register');
+Route::post('register','LoginController@save')->name('register');
+Route::get('login','LoginController@create')->name('login');
+Route::post('login','LoginController@store')->name('login');
+Route::delete('logout','LoginController@destroy')->name('logout');
 
 //验证登录中间件
 Route::group(['middleware'=>['platform']],function (){
@@ -65,10 +65,10 @@ Route::get('/oss', function()
 //webuploader 文件上传!
 Route::post('/upload','Tools\UploadController@upload');
 
-//laravel自带的登录注册
+/*//laravel自带的登录注册
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');*/
 
 //0428商家查看商铺的订单列表
 Route::get('/order','ShopBusinessController@index')->name('order');
