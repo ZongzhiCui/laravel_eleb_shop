@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EnevtPrizes;
 use App\Models\Event;
 use App\Models\EventMembers;
 use Illuminate\Http\Request;
@@ -19,7 +20,14 @@ class EventController extends Controller
     //查看活动详情
     public function show(Event $event)
     {
-        return view('event.show',compact('event'));
+        //获取奖品列表
+        $eventPrizes = DB::table('enevt_prizes')->get();
+        //获奖名单
+        $winnersLists = EnevtPrizes::where([   //查奖品表
+            ['events_id','=',$event->id],         //条件1 活动ID
+            ['member_id','<>',0]                  //条件2 奖品有获奖者
+        ])->paginate(10);
+        return view('event.show',compact('event','eventPrizes','winnersLists'));
     }
     //添加参加活动的人
     public function createEventMember(Request $request)
