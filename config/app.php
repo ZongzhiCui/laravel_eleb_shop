@@ -183,6 +183,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         //阿里云oss
         AliyunOss\Laravel\AliyunOssServiceProvider::class,
+        
     ],
 
     /*
