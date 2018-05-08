@@ -48,6 +48,7 @@ class LoginController extends Controller
         return view('login.create');
     }
 
+    //商户登录验证
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -59,8 +60,12 @@ class LoginController extends Controller
             'captcha.captcha' => '验证码不正确',
         ]);
         if (Auth::attempt(['email'=>$request->email,'password'=>$request->password],$request->has('remember'))){
-            session()->flash('success','登录成功!');
             $shop_user = Auth::user();
+//            dd(Auth::user()->status);
+            if ($shop_user->status==0){
+                return redirect()->route('shop_business.show',compact('shop_user'))->with('danger','该账户还没有通过审核!!请尽快完善信息');
+            }
+            session()->flash('success','登录成功!');
             return redirect()->route('shop_business.show',compact('shop_user'));//->intended('shop_business.show',compact('shop_user'));
         }else{
             return back()->withInput()->with('danger','用户名或者密码错误!');
