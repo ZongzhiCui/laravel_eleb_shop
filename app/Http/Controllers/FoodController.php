@@ -54,6 +54,7 @@ class FoodController extends Controller
                     ]);
                 })
             ],
+            'norm'=>'min:2',
             'logo'=>'required',
         ],[
             'name.unique'=>'菜品名称 在当前店铺和当前分类不能相同',
@@ -133,6 +134,7 @@ class FoodController extends Controller
                     ]);
                 })
             ],
+            'norm'=>'min:2',
 //            'logo'=>'image',
         ],[
 
