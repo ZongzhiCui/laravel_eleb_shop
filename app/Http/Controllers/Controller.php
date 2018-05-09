@@ -16,13 +16,13 @@ class Controller extends BaseController
     //上传图片,制作缩略图
     public function thumb($filename,$width=100,$height=100)
     {
-        $filename = public_path().storage::url($filename);
+        //$filename = public_path().storage::url($filename);
         //dd($filename);
-        $path_parts = pathinfo($filename); //storage::url($filename);这个才是可用的图片路径
+        $path_parts = pathinfo(public_path().storage::url($filename)); //storage::url($filename);这个才是可用的图片路径
         //dd($path_parts);//public_path().Storage::url($filename);
         $i_mg = $path_parts['filename'].'_'.$width.'X'.$height.'.'.$path_parts['extension']; //拼接缩略图文件路径
         //dd($i_mg);
-        $img = Image::make($filename)->resize($width, $height);//图片资源必须绝对路径!缩略图
+        $img = Image::make(public_path().storage::url($filename))->resize($width, $height);//图片资源必须绝对路径!缩略图
         //dd($img);
         $img->save($path_parts['dirname'].'/'.$i_mg);
         //dd(dirname($filename).'/'.$i_mg);
