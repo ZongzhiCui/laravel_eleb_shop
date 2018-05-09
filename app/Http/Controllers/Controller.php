@@ -18,11 +18,12 @@ class Controller extends BaseController
     {
         //$filename = public_path().storage::url($filename);
         //dd($filename);
-        $path_parts = pathinfo(public_path().storage::url($filename)); //storage::url($filename);这个才是可用的图片路径
+        $file = public_path().storage::url($filename);
+        $path_parts = pathinfo($file); //storage::url($filename);这个才是可用的图片路径
         //dd($path_parts);//public_path().Storage::url($filename);
         $i_mg = $path_parts['filename'].'_'.$width.'X'.$height.'.'.$path_parts['extension']; //拼接缩略图文件路径
         //dd($i_mg);
-        $img = Image::make(public_path().storage::url($filename))->resize($width, $height);//图片资源必须绝对路径!缩略图
+        $img = Image::make($file)->resize($width, $height);//图片资源必须绝对路径!缩略图
         //dd($img);
         $img->save($path_parts['dirname'].'/'.$i_mg);
         //dd(dirname($filename).'/'.$i_mg);
